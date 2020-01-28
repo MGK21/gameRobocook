@@ -1,4 +1,5 @@
 import loader from "./loader.js"
+import GameState from "./GameState.js"
 
 export default class GameObject {
 
@@ -8,6 +9,8 @@ export default class GameObject {
         this.width = 0;
         this.height = 0;
         this.collisionEnable = true;
+        this.updateHitBoxFromSprite = true;
+        this.hitBoxFunction = null;
         this.sprite = null;
         this.spriteDimensionsArray = [];
         this.spriteChangeSpeed = 0;
@@ -42,7 +45,23 @@ export default class GameObject {
         this.height = height;
     }
 
+    remove() {
+        GameState.remove(this);
+    }
+
+    updateHitBoxToSprite() {
+        this.hitBox.x = this.x;
+        this.hitBox.y = this.y;
+        this.setPhysicalDimensions(this.width, this.height);
+    }
     update(dt) {
+        if (this.collisionEnable && this.updateHitBoxFromSprite) {
+            this.updateHitBoxToSprite();
+        }
+
+        if (this.collisionEnable && this.hitBoxFunction) {
+            this.hitBoxFunction(this.hitBox, this);
+        }
         if (this.animation) {
             this.animation.render(dt * 1000);
             const spritePosition = this.animation.currentSpritePosition;

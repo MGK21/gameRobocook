@@ -32,7 +32,7 @@ const gameState = class GameState {
     }
 
     remove(o) {
-        let i = this.objects.findIndex(o);
+        let i = this.objects.indexOf(o);
         this.objects.splice(i, 1);
 
     }
@@ -42,7 +42,6 @@ const gameState = class GameState {
             o.update(delta);
             this.collisionUpdate();
         }
-
     }
 
     collisionUpdate() {

@@ -21,19 +21,22 @@ import {
     backGround.loadSprite("../images/background ice all.png");
     gameState.add(backGround);
     gameState.add(player);
-    player.onCollision = ()=>{
+    window.player = player;
+    player.onCollision = () => {
         console.log("hit")
     }
 
 
     setInterval(() => {
-        const enemy = new Enemy(500+Math.random()*1000, 0, 600);
+        const enemy = new Enemy(500 + Math.random() * 1000, 0, 600);
         enemy.loadSprite("../images/icicle.png");
+        enemy.hitBoxFunction = (hitBox, gameObject) => {
+            gameObject.updateHitBoxToSprite();
+            hitBox.x += 30;
+            hitBox.width -= 30;
+        }
         gameState.add(enemy);
-
-        setTimeout(()=>{
-            gameState.remove(enemy)
-        },1000)
+        window.enemy = enemy;
     }, 2000)
 
 
