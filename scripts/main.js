@@ -13,7 +13,7 @@ import {
 
 
 (async function () {
-    const player = new Player(0, 696);
+    const player = new Player(100, 696);
     await player.init();
 
 
@@ -22,10 +22,27 @@ import {
     gameState.add(backGround);
     gameState.add(player);
     window.player = player;
-    player.onCollision = () => {
-        console.log("hit")
+    player.onCollision = (gameObject) => {
+        gameObject.collisionEnable = false;
+        gameLogic.score -= 100;
     }
-
+    
+    window.gameLogic = gameLogic;
+    //clamp scrollSpeed = clamp(1000,3500)
+    //1000->3500
+    //0 -> 60
+    //3500/60 = 58;
+    let lastScrollSpeed = 1000;
+    setInterval(()=>{
+        if(gameLogic.defaultScrollSpeed >= 3500) return;
+        lastScrollSpeed = gameLogic.defaultScrollSpeed;
+        gameLogic.defaultScrollSpeed += 200;
+        
+        for(const o in player.runAnimation.speedOfFrame) {
+            player.runAnimation.speedOfFrame[o] -= 1 * ((gameLogic.defaultScrollSpeed - lastScrollSpeed) / 50);
+        }
+        player.runAnimation.setSpeedOfFrame(player.runAnimation.speedOfFrame);
+    }, 3000)
 
     setInterval(() => {
         const enemy = new Enemy(500 + Math.random() * 1000, 0, 600);
@@ -56,7 +73,7 @@ import {
 
     function update(dt) {
         gameState.update(dt);
-
+        document.getElementById("score").innerText = gameLogic.score;
     }
 
     function render() {

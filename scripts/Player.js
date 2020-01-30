@@ -174,6 +174,8 @@ export default class Player extends GameObject {
 
     constructor(x, y, gameLogic) {
         super(x, y);
+        
+        window.an = this.runAnimation
         document.addEventListener("keydown", (event) => {
             if (event.keyCode === 32)
                 this.spacePressed = true;

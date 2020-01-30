@@ -48,7 +48,7 @@ const gameState = class GameState {
         collidedGameObjects = [];
         for (let i = 0; i < this.objects.length; i++) {
             for (let j = i + 1; j < this.objects.length; j++) {
-                if (this.objects[i].collisionEnable && this.objects[i].collisionEnable)
+                if (this.objects[i].collisionEnable && this.objects[j].collisionEnable)
                     if (checkCollision(this.objects[i], this.objects[j])) {
                         if (this.objects[i].onCollision)
                             this.objects[i].onCollision(this.objects[j]);

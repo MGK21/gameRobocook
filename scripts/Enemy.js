@@ -10,7 +10,7 @@ export default class Enemy extends GameObject {
 
     update(dtime) {
         super.update(dtime);
-        this.y += dtime * this.ySpeed;
+        this.y += dtime * this.ySpeed * gameLogic.defaultScrollSpeed / 500;
         this.x += dtime * -gameLogic.scrollSpeed;
         if(this.y >= canvas.height) {
             this.remove();

@@ -53,7 +53,22 @@ export default class Animation {
             this.eachFrameStartTime.push(acc + currentValue);
             return acc + currentValue;
         });
+    }
 
+    setCurrentAnimationFrame(frameNumber){
+        this.currentFrame = frameNumber;
+        this.currentAnimationTime = this.eachFrameStartTime[frameNumber];
+    }
+
+    setSpeedOfFrame(speedOfFrame) {
+        this.speedOfFrame = speedOfFrame;
+        this.eachFrameDuration = Object.values(this.speedOfFrame);
+        this.eachFrameStartTime = [0, this.eachFrameDuration[0]];
+        this.eachFrameDuration.reduce((acc, currentValue) => {
+            this.eachFrameStartTime.push(acc + currentValue);
+            return acc + currentValue;
+        });
+        this.setCurrentAnimationFrame(this.currentFrame);
     }
 
     onDone(){
