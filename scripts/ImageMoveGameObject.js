@@ -20,8 +20,8 @@ export default class ImageMoveGameObject extends GameObject {
 
     render(ctx) {
         if (this.sprite) {
-            ctx.drawImage(this.sprite, this.imageWidth + 3, 0);
-            ctx.drawImage(this.sprite, this.sprite.width + this.imageWidth, 0);
+            ctx.drawImage(this.sprite, this.imageWidth + 1.5, 0);
+            ctx.drawImage(this.sprite, this.sprite.width + this.imageWidth - 1.5, 0);
         }
     }
 }
